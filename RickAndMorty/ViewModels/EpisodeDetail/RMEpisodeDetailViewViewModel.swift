@@ -13,8 +13,9 @@ protocol RMEpisodeDetailViewViewModelDelegate: AnyObject {
 
 final class RMEpisodeDetailViewViewModel {
     private let endpointUrl: URL?
-    private var dataTuple: (RMEpisode, [RMCharacter])? {
+    private var dataTuple: (episode: RMEpisode, characters: [RMCharacter])? {
         didSet {
+            createCellViewModels()
             delegate?.didFetchEpisodeDetails()
         }
     }
@@ -26,7 +27,7 @@ final class RMEpisodeDetailViewViewModel {
 
     public weak var delegate: RMEpisodeDetailViewViewModelDelegate?
 
-    public private(set) var sections: [SectionType] = []
+    public private(set) var cellViewModels: [SectionType] = []
 
     // MARK: - Init
 
@@ -34,10 +35,31 @@ final class RMEpisodeDetailViewViewModel {
         self.endpointUrl = endpointUrl
     }
 
-    // MARK: - Public
-    
-
     // MARK: - Private
+
+    private func createCellViewModels() {
+        guard let dataTuple = dataTuple else {
+            return
+        }
+
+        let episode = dataTuple.episode
+        let characters = dataTuple.characters
+        cellViewModels = [
+            .information(viewModels: [
+                .init(title: "Episode Name", value: episode.name),
+                .init(title: "Air Date", value: episode.air_date),
+                .init(title: "Episode", value: episode.episode),
+                .init(title: "Created", value: episode.created),
+            ]),
+            .characters(viewModel: characters.compactMap({ character in
+                return RMCharacterCollectionViewCellViewModel(
+                    characterName: character.name,
+                    characterStatus: character.status,
+                    characterImageUrl: URL(string: character.image)
+                )
+            }))
+        ]
+    }
 
     /// Fetch backing episode model
     public func fetchEpisodeData() {
@@ -87,8 +109,8 @@ final class RMEpisodeDetailViewViewModel {
 
         group.notify(queue: .main) {
             self.dataTuple = (
-                episode,
-                characters
+                episode: episode,
+                characters: characters
             )
         }
     }
