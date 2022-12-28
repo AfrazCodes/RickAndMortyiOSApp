@@ -21,6 +21,19 @@ final class RMService {
         case failedToCreateRequest
         case failedToGetData
     }
+    
+    /// Send Rick and Morty API Call
+    /// - Parameters:
+    ///   - request: Request instance
+    ///   - type: The type of object we expect to get back
+    /// - Returns: Asynchronously returned callback data or error.
+    public func execute<T: Codable>(_ request: RMRequest, excepting type: T.Type) async -> Result<T, Error> {
+        await withCheckedContinuation({ continuation in
+            execute(request, expecting: type) { result in
+                continuation.resume(returning: result)
+            }
+        })
+    }
 
     /// Send Rick and Morty API Call
     /// - Parameters:

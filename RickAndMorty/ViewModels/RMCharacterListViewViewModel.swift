@@ -42,19 +42,17 @@ final class RMCharacterListViewViewModel: NSObject {
 
     /// Fetch initial set of characters (20)
     public func fetchCharacters() {
-        RMService.shared.execute(
-            .listCharactersRequests,
-            expecting: RMGetAllCharactersResponse.self
-        ) { [weak self] result in
+        Task {
+            let result = await RMService.shared.execute(.listCharactersRequests, excepting: RMGetAllCharactersResponse.self)
             switch result {
             case .success(let responseModel):
                 let results = responseModel.results
                 let info = responseModel.info
-                self?.characters = results
-                self?.apiInfo = info
-                DispatchQueue.main.async {
-                    self?.delegate?.didLoadInitialCharacters()
-                }
+                self.characters = results
+                self.apiInfo = info
+                await MainActor.run(body: {
+                    self.delegate?.didLoadInitialCharacters()
+                })
             case .failure(let error):
                 print(String(describing: error))
             }
@@ -72,35 +70,30 @@ final class RMCharacterListViewViewModel: NSObject {
             return
         }
         
-        RMService.shared.execute(request, expecting: RMGetAllCharactersResponse.self) { [weak self] result in
-            guard let strongSelf = self else {
-                return
-            }
+        Task {
+            let result = await RMService.shared.execute(request, excepting: RMGetAllCharactersResponse.self)
             switch result {
             case .success(let responseModel):
                 let moreResults = responseModel.results
                 let info = responseModel.info
-                strongSelf.apiInfo = info
+                self.apiInfo = info
 
-                let originalCount = strongSelf.characters.count
+                let originalCount = self.characters.count
                 let newCount = moreResults.count
                 let total = originalCount+newCount
                 let startingIndex = total - newCount
                 let indexPathsToAdd: [IndexPath] = Array(startingIndex..<(startingIndex+newCount)).compactMap({
                     return IndexPath(row: $0, section: 0)
                 })
-                strongSelf.characters.append(contentsOf: moreResults)
-
-                DispatchQueue.main.async {
-                    strongSelf.delegate?.didLoadMoreCharacters(
-                        with: indexPathsToAdd
-                    )
-
-                    strongSelf.isLoadingMoreCharacters = false
-                }
+                self.characters.append(contentsOf: moreResults)
+                
+                await MainActor.run(body: {
+                    self.delegate?.didLoadMoreCharacters(with: indexPathsToAdd)
+                    self.isLoadingMoreCharacters = false
+                })
             case .failure(let failure):
                 print(String(describing: failure))
-                self?.isLoadingMoreCharacters = false
+                self.isLoadingMoreCharacters = false
             }
         }
     }

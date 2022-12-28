@@ -80,12 +80,11 @@ final class RMEpisodeDetailViewViewModel {
               let request = RMRequest(url: url) else {
             return
         }
-
-        RMService.shared.execute(request,
-                                 expecting: RMEpisode.self) { [weak self] result in
+        Task {
+            let result = await RMService.shared.execute(request, excepting: RMEpisode.self)
             switch result {
             case .success(let model):
-                self?.fetchRelatedCharacters(episode: model)
+                self.fetchRelatedCharacters(episode: model)
             case .failure:
                 break
             }

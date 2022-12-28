@@ -58,12 +58,13 @@ final class RMCharacterEpisodeCollectionViewCellViewModel: Hashable, Equatable {
 
         isFetching = true
 
-        RMService.shared.execute(request, expecting: RMEpisode.self) { [weak self] result in
+        Task {
+            let result = await RMService.shared.execute(request, excepting: RMEpisode.self)
             switch result {
             case .success(let model):
-                DispatchQueue.main.async {
-                    self?.episode = model
-                }
+                await MainActor.run(body: {
+                    self.episode = model
+                })
             case .failure(let failure):
                 print(String(describing: failure))
             }
