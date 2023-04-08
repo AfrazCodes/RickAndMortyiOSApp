@@ -105,6 +105,7 @@
 		8342527429BCB3D900F62C27 /* RMTableLoadingFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMTableLoadingFooterView.swift; sourceTree = "<group>"; };
 		8371D0B329AB9A5600F637C0 /* RMSearchResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSearchResultViewModel.swift; sourceTree = "<group>"; };
 		838D438029634AEE00C15FB9 /* RMSearchOptionPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSearchOptionPickerViewController.swift; sourceTree = "<group>"; };
+		8392854229DAFEAB00AD7B7F /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		839778CC2958D97300C94AD3 /* RMEpisodeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMEpisodeDetailViewController.swift; sourceTree = "<group>"; };
 		839778CE2958F2DC00C94AD3 /* RMAPICacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMAPICacheManager.swift; sourceTree = "<group>"; };
 		839778D02958F5C700C94AD3 /* RMEpisodeDetailViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMEpisodeDetailViewViewModel.swift; sourceTree = "<group>"; };
@@ -339,6 +340,7 @@
 				83D9AD092954BE61001E1C72 /* Models */,
 				83D9AD082954BE58001E1C72 /* Controllers */,
 				83D9AD022954BD61001E1C72 /* Info.plist */,
+				8392854229DAFEAB00AD7B7F /* Config.xcconfig */,
 			);
 			path = RickAndMorty;
 			sourceTree = "<group>";
@@ -608,6 +610,7 @@
 /* Begin XCBuildConfiguration section */
 		83D9AD032954BD61001E1C72 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8392854229DAFEAB00AD7B7F /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -668,6 +671,7 @@
 		};
 		83D9AD042954BD61001E1C72 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8392854229DAFEAB00AD7B7F /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -722,6 +726,7 @@
 		};
 		83D9AD062954BD61001E1C72 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8392854229DAFEAB00AD7B7F /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -751,6 +756,7 @@
 		};
 		83D9AD072954BD61001E1C72 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8392854229DAFEAB00AD7B7F /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
