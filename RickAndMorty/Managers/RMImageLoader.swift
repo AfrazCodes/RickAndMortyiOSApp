@@ -7,11 +7,15 @@
 
 import Foundation
 
+/// Manage for image loading
 final class RMImageLoader {
+    /// Shared instance
     static let shared = RMImageLoader()
 
+    /// In memory data cache
     private var imageDataCache = NSCache<NSString, NSData>()
 
+    /// Constructor
     private init() {}
 
     /// Get image content with URl

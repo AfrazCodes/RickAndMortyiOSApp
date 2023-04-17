@@ -17,6 +17,7 @@ final class RMService {
     /// Privatized constructor
     private init() {}
 
+    /// Error types
     enum RMServiceError: Error {
         case failedToCreateRequest
         case failedToGetData

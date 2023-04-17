@@ -7,11 +7,6 @@
 
 import Foundation
 
-// Responsibilities
-// - show search results
-// - show no results view
-// - kick off API requests
-
 final class RMSearchViewViewModel {
     let config: RMSearchViewController.Config
     private var optionMap: [RMSearchInputViewViewModel.DynamicOption: String] = [:]
